@@ -15,6 +15,11 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
+app.get("/",async(req,res)=>{
+    res.send({message:'EBS Push Notification API'})
+    
+})
+
 app.get("/users",async(req,res)=>{
     const {user}=req.body
     const token = await fetchDeviceToken(user)
