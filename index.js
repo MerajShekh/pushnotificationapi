@@ -14,12 +14,10 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
-
-
-
 app.get("/users",async(req,res)=>{
-    const user = await fetchDeviceToken('user2')
-    res.send(user)
+    const {user}=req.body
+    const token = await fetchDeviceToken(user)
+    res.send(token)
     
 })
 
@@ -31,9 +29,7 @@ app.post("/createUser",async(req,res)=>{
 
 
 app.post('/pushNotification', async (req, res)=>{
-        console.log(req.body)
         const {title,body,user} = req.body
-
        let token = await fetchDeviceToken(user)
        token = token.map(e=>e.tDeviceToken)
         let options={

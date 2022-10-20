@@ -1,11 +1,15 @@
 const mysql =require('mysql2/promise')
 
 const pool = mysql.createPool({
-    host:'127.0.0.1',
-    user:'root',
-    password:'',
-    database:'notification',
+    // host:'127.0.0.1',
+    // user:'root',
+    // password:'',
+    // database:'notification',
 
+    host: 'intelloger.in',
+    user: 'u469729652_ebsmiddleware',
+    password: '4fm#FPEt@',
+    database: 'u469729652_ebsmiddleware',
 })
 
  async function getAllUser(){
@@ -30,10 +34,8 @@ async function fetchDeviceToken(user){
 async function createUser(vUserName,vEmail,tDeviceToken){
     try {
         const [row] = await pool.query(`SELECT * FROM tbl_user where vUserName=?`,[vUserName])
-        console.log('row',row)
         if (row.length) {
            const [update] =  await pool.query(`UPDATE tbl_user SET tDeviceToken = ? where vUserName=?`,[tDeviceToken,vUserName])
-            console.log('Update',update.info);
             return update.info
         }else{
             const [result] = await pool.query(`INSERT INTO tbl_user (vUserName,vEmail,tDeviceToken) VALUES(?,?,?)`,[vUserName,vEmail,tDeviceToken])
