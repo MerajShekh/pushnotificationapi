@@ -1,6 +1,8 @@
 let admin =require("firebase-admin");
 const bodyParser = require('body-parser')
 const express= require('express');
+require('dotenv').config()
+
 const app = express();
 const {getAllUser,fetchDeviceToken,createUser} = require("./database.js");
 
@@ -8,11 +10,15 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 let PORT = process.env.PORT || 5000
 
-const serviceAccount = require("D:/Meraj/React Native/superchat-34597-firebase-adminsdk-serviceAccountKey.json");
-
+const serviceAccount = require("./serviceAccountKey.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
+
+app.get("/",async(req,res)=>{
+    res.send({message:'EBS Push Notification API'})
+    
+})
 
 app.get("/users",async(req,res)=>{
     const {user}=req.body
@@ -36,9 +42,6 @@ app.post('/pushNotification', async (req, res)=>{
             priority:"high",
             timeToLive:60 * 60 * 24
         }
-    
-    
-        // let token = ['dObaT-q0QXmt3Njp6bHldO:APA91bECuw-LADMBeAwWJjFoZDs2lIvqn7JWE1_V95Lu5aQGT9PtlgrWmCTUr3Ar']
         
         let payload = {
             notification:{

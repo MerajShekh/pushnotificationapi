@@ -6,10 +6,10 @@ const pool = mysql.createPool({
     // password:'',
     // database:'notification',
 
-    host: 'intelloger.in',
-    user: 'u469729652_ebsmiddleware',
-    password: '4fm#FPEt@',
-    database: 'u469729652_ebsmiddleware',
+    host: process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE,
 })
 
  async function getAllUser(){
